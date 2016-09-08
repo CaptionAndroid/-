@@ -1,0 +1,114 @@
+package com.imooc.listview;
+
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import java.util.List;
+import java.util.Map;
+
+
+import android.os.Bundle;
+
+import android.app.Activity;
+
+import android.view.Menu;
+
+import android.widget.ArrayAdapter;
+
+import android.widget.ListView;
+
+import android.widget.SimpleAdapter;
+
+
+public class MainActivity extends Activity {
+	
+	private ListView listView;
+	
+	private ArrayAdapter<String>arr_adapter;
+	
+	private SimpleAdapter simp_adapter;
+	
+	private List<Map<String,Object>>dataList;
+    
+	@Override
+    
+	protected void onCreate(Bundle savedInstanceState) {
+        
+		super.onCreate(savedInstanceState);
+        
+		setContentView(R.layout.activity_main);
+        
+		listView=(ListView)findViewById(R.id.listView);
+        
+		// 新建数据适配器
+        
+		//ArrayAdapter（上下文，当前listview加载的每一个列表项所对应的布局文件，数据源）
+       
+		//适配器加载数据源
+        
+		String[]arr_data={"imooc1","imooc2","imooc3","imooc4"};
+        
+		dataList=new ArrayList<Map<String,Object>>();
+        
+		arr_adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr_data);
+       		 //SimpleAdapter(上下文，数据源，列表项的布局文件的ID，map中的键名，绑定视图中的ID，与from成对应关系)
+        	
+		simp_adapter=new SimpleAdapter(this,getData(),R.layout.item,new String[]{"pic","text"},new 										int[]{R.id.pic,R.id.text});
+        
+		//视图加载器（listview）
+        
+		//listView.setAdapter(arr_adapter);
+        
+		listView.setAdapter(simp_adapter);
+    }
+
+    
+    
+	private List<Map<String,Object>> getData(){
+    	
+		for(int i=0;i<20;i++){
+    		
+		Map<String,Object>map=new HashMap<String,Object>();
+    		
+		map.put("pic",R.drawable.ic_launcher);
+    		
+		map.put("text","imooc"+i);
+    		
+		dataList.add(map);
+    	
+		}
+    	
+		return dataList;
+    
+	}
+
+}
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <ImageView
+        android:id="@+id/pic"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"/>
+    
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="demo"/>
+
+</LinearLayout>
